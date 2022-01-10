@@ -15,5 +15,16 @@
         "gabordemooij/redbean": "^5.7",
         "symfony/var-dumper": "^6.0",
       "ext-simplexml": "*"
+    },
+    "type": "package",
+    "package": {
+        "name": "yanntyb/poupulate",
+        "version": "5.2.6",
+        "type": "plugin",
+        "source": {
+            "type": "git",
+            "url": "git@github.com:yanntyb-lib/populate.git",
+            "reference" : "v5.2.6"
+        }
     }
 }
