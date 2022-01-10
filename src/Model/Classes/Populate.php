@@ -23,7 +23,9 @@ class Populate{
 
     public static function setup(string $dbname, string $user, string $password){
         if(!self::$setupFlag){
-            R::setup("mysql:host=localhost;dbname=$dbname","$user","$password");
+            if(!R::getDatabaseAdapter()->getDatabase()->isConnected()){
+                R::setup("mysql:host=localhost;dbname=$dbname","$user","$password");
+            }
             self::$dbname = $dbname;
             self::$user = $user;
             self::$password = $password;
