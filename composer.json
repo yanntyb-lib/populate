@@ -1,0 +1,19 @@
+{
+    "name": "yanntyb/populate",
+    "autoload": {
+        "psr-4": {
+            "Yanntyb\\Populate\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "yanntyb",
+            "email": "yanntyb.lbc@gmail.com"
+        }
+    ],
+    "require": {
+        "gabordemooij/redbean": "^5.7",
+        "symfony/var-dumper": "^6.0",
+      "ext-simplexml": "*"
+    }
+}
