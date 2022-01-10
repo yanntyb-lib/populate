@@ -19,7 +19,7 @@
     },
     "type": "package",
     "package": {
-        "name": "yanntyb/poupulate",
+        "name": "yanntyb/populate",
         "version": "5.2.6",
         "type": "plugin",
         "source": {
