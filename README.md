@@ -1,1 +1,3 @@
 # populate
+
+Populate::help();
