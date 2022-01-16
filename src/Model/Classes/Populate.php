@@ -14,16 +14,17 @@ class Populate{
     private static string $user = "";
     private static string $password = "";
     private int $instance_id;
+    private static string $lorem = "";
 
     protected function __construct(string $dbname, string $user, string $password){
         $this->instance_id = count(self::$instances);
         $this->setup($dbname,$user,$password);
-
+        static::$lorem = static::makeRandomString(10000);
     }
 
     public static function setup(string $dbname, string $user, string $password){
         if(!self::$setupFlag){
-            if(!R::getDatabaseAdapter()){
+            if(!R::testConnection()){
                 R::setup("mysql:host=localhost;dbname=$dbname","$user","$password");
             }
             self::$dbname = $dbname;
@@ -46,23 +47,6 @@ class Populate{
         else{
             throw new PopulateNotSetup();
         }
-    }
-
-    public static function help(){
-        echo
-        "
-            <h1>How to use Populate class</h1>
-            <div>First you need to setup the class with Populate::setup(dbname,user,password)</div>
-            <div>Then make a maker like this maker = Populate::maker(column_name)</div>
-            <div>Finaly maker->populate(number_of_row, [data])</div>
-            <div>data should be an array of corresponding type like :</div>
-            <div style='color:red'>
-                <div>['type' => 'string', 'len' => number]</div>         
-                <div>['type' => 'number', 'min' => number, 'max' => number]</div>
-                <div>['type' => 'fk', 'table' => string]</div>     
-            </div>   
-            <div>Every time need a 'name' property </div>  
-        ";
     }
 
 
@@ -89,13 +73,15 @@ class Populate{
      * @throws Exception
      */
     public function populate(int $rowNumber, array $columns){
-        for($i = 0; $i < $rowNumber; $i ++){
-            $bean = R::dispense($this->getTableName());
+        $beans = R::dispense($this->getTableName(), $rowNumber);
+
+        foreach($beans as $key => $bean){
             foreach($columns as $col){
                 $name = $col["name"];
                 switch($col["type"]){
                     case "string":
-                        $bean->$name = $this->randomString($col["len"]);
+                        echo ucfirst(trim(substr(static::$lorem,rand(0,strlen(static::$lorem)),$col["len"]))) . "<br>";
+                        $bean->$name = trim(ucfirst(substr(static::$lorem,rand(0,strlen(static::$lorem)),$col["len"])));
                         break;
                     case "number":
                         $bean->$name = $this->randomNumber($col["min"], $col["max"]);
@@ -104,12 +90,13 @@ class Populate{
                         $bean->$name = $this->randomFk($col["table"]);
                         break;
                 }
-                R::store($bean);
             }
+            R::store($bean);
         }
+
     }
 
-    public function randomString(int $len): string
+    public static function makeRandomString(int $len): string
     {
         return substr(simplexml_load_file('http://www.lipsum.com/feed/xml?amount=1&what=paras&start=0')->lipsum->__toString(),0,$len);
     }
