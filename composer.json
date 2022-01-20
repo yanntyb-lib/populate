@@ -5,7 +5,7 @@
             "Yanntyb\\Populate\\": "src/"
         }
     },
-    "version": "1.0.4",
+    "version": "1.0.5",
     "authors": [
         {
             "name": "yanntyb",
@@ -13,9 +13,8 @@
         }
     ],
     "require": {
-        "gabordemooij/redbean": "^5.7",
+        "gabordemooij/redbean": "dev-master",
         "symfony/var-dumper": "^6.0",
-        "ext-simplexml": "*",
-        "yanntyb/populate": "dev-main"
+        "ext-simplexml": "*"
     }
 }
