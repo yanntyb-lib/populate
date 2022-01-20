@@ -80,7 +80,6 @@ class Populate{
                 $name = $col["name"];
                 switch($col["type"]){
                     case "string":
-                        echo ucfirst(trim(substr(static::$lorem,rand(0,strlen(static::$lorem)),$col["len"]))) . "<br>";
                         $bean->$name = trim(ucfirst(substr(static::$lorem,rand(0,strlen(static::$lorem)),$col["len"])));
                         break;
                     case "number":
